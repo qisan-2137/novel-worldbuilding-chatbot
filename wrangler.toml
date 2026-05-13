@@ -11,5 +11,5 @@ not_found_handling = "single-page-application"
 [[d1_databases]]
 binding = "DB"
 database_name = "novel_worldbuilding_chatbot"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "2219b7ec-d85a-4c6b-9c72-c7b80ebcefb1"
 migrations_dir = "./migrations"
