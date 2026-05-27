@@ -1,0 +1,78 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="70" y2="70" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7487FF"/>
+      <stop offset="1" stop-color="#4E63E7"/>
+    </linearGradient>
+    <linearGradient id="scene" x1="0" y1="0" x2="420" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#82C5FF"/>
+      <stop offset="0.55" stop-color="#B8E4C7"/>
+      <stop offset="1" stop-color="#F2D6A4"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="20" stdDeviation="28" flood-color="#182235" flood-opacity="0.08"/>
+    </filter>
+    <style>
+      text { font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; fill: #1E2633; }
+      .page { fill: #F7F8FC; }
+      .shell { fill: #FFFFFF; stroke: rgba(32,42,58,0.10); filter: url(#shadow); }
+      .card { fill: #FFFFFF; stroke: rgba(32,42,58,0.10); }
+      .soft { fill: #F7F9FE; stroke: rgba(32,42,58,0.09); }
+      .selected { fill: #EEF2FF; stroke: rgba(86,103,235,0.14); }
+      .brand { fill: url(#brand); }
+      .line { stroke: rgba(32,42,58,0.10); }
+      .title { font-size: 29px; font-weight: 760; }
+      .h2 { font-size: 23px; font-weight: 740; }
+      .h3 { font-size: 18px; font-weight: 740; }
+      .body { font-size: 16px; }
+      .small { font-size: 14px; fill: #647084; }
+      .tiny { font-size: 12px; fill: #8993A3; }
+      .nav { font-size: 13px; font-weight: 700; fill: #5667EB; }
+      .chip { fill: #F4F6FB; stroke: rgba(32,42,58,0.08); }
+      .chipText { font-size: 13px; fill: #596579; font-weight: 700; }
+      .buttonText { font-size: 15px; fill: #fff; font-weight: 760; }
+    </style>
+  </defs>
+  <rect width="1600" height="900" class="page"/>
+  <text x="52" y="54" class="tiny">Prototype 01 / 主会话工作台</text>
+  
+      <rect x="36" y="36" width="1528" height="828" rx="18" class="shell"/>
+      <rect x="36" y="36" width="78" height="828" rx="18" class="soft"/>
+      <rect x="58" y="62" width="36" height="36" rx="10" class="brand"/>
+      <rect x="52" y="154" width="52" height="34" rx="10" class="chip"/><text x="70" y="177" class="chipText">会话</text>
+      <text x="62" y="226" class="small">大纲</text>
+      <text x="56" y="298" class="small">创作场景</text>
+      <text x="58" y="370" class="small">灵感库</text>
+      <text x="58" y="806" class="small">设置</text>
+      <rect x="114" y="36" width="218" height="828" rx="0" class="card"/>
+      <text x="146" y="80" class="h3">默认小说企划</text>
+      <text x="146" y="106" class="tiny">围绕同一部小说的世界观、灵感与设定</text>
+      <rect x="146" y="146" width="156" height="34" rx="9" class="card"/>
+      <text x="188" y="168" class="small">+ 新建会话</text>
+      <rect x="146" y="210" width="156" height="56" rx="8" class="selected"/>
+      <text x="160" y="234" class="small">帮我设计一个有关奶龙世界</text>
+      <text x="160" y="254" class="small">的世界观</text>
+      <text x="146" y="308" class="small">帮我设计一个帝国蒸汽</text>
+      <text x="146" y="328" class="small">的船舶魔法工业世界...</text>
+      <line x1="146" y1="358" x2="302" y2="358" class="line"/>
+      <text x="146" y="400" class="small">我想写一部带有科幻气质</text>
+      <text x="146" y="420" class="small">的星际政治小说...</text>
+      <line x1="332" y1="116" x2="1564" y2="116" class="line"/>
+      <text x="374" y="80" class="title">帮我设计一个有关奶龙世界的世界观</text>
+      <text x="1114" y="80" class="small">每次回复都会同步更新世界观条目和大纲节点。</text>
+      <rect x="374" y="156" width="1144" height="62" rx="10" class="soft"/>
+      <text x="436" y="190" class="small">助手</text><text x="1452" y="190" class="tiny">21:12</text>
+      <text x="436" y="210" class="body">帮我设计一个有关奶龙世界的世界观</text>
+      <rect x="374" y="248" width="1144" height="62" rx="10" class="soft"/>
+      <text x="436" y="282" class="small">助手</text><text x="1452" y="282" class="tiny">23:30</text>
+      <text x="436" y="302" class="body">111</text>
+      <rect x="374" y="340" width="1144" height="62" rx="10" class="soft"/>
+      <text x="436" y="374" class="small">助手</text><text x="1430" y="374" class="tiny">05/20 15:32</text>
+      <text x="436" y="394" class="body">帮我设计一个有关奶龙世界的世界观</text>
+      <rect x="374" y="430" width="1144" height="176" rx="10" class="card"/>
+      <text x="396" y="462" class="small">例如：帮我设计一个拥有贵族血脉魔法和铁路工业革命并存的世界，并整理科技体系、魔法体系和核心冲突。</text>
+      <rect x="396" y="556" width="1086" height="44" rx="12" class="soft"/>
+      <text x="486" y="584" class="tiny">请输入你的问题，Shift + Enter 换行</text>
+      <rect x="1440" y="562" width="36" height="36" rx="10" class="brand"/>
+    
+</svg>

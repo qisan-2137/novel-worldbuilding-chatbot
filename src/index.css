@@ -1,22 +1,28 @@
 :root {
-  --bg: #f2ebe2;
-  --bg-deep: #e5d6c2;
-  --text: #2f241a;
-  --text-strong: #1f160f;
-  --muted: #6a594b;
-  --accent: #a6642c;
-  --line: rgba(112, 96, 78, 0.18);
-  --heading: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
-  --sans: 'Avenir Next', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
-  --mono: 'SFMono-Regular', 'JetBrains Mono', Consolas, monospace;
+  --app-bg: #f4f6fb;
+  --surface: #ffffff;
+  --surface-soft: #f8faff;
+  --text: #253142;
+  --text-strong: #121a28;
+  --muted: #748195;
+  --muted-strong: #4d5b6d;
+  --accent: #5d71e4;
+  --line: rgba(38, 48, 68, 0.1);
+  --font-sans:
+    'LXGW WenKai Screen',
+    'Source Han Sans SC',
+    'PingFang SC',
+    'Hiragino Sans GB',
+    'Microsoft YaHei',
+    'Noto Sans CJK SC',
+    sans-serif;
+  --font-mono: 'SFMono-Regular', 'JetBrains Mono', Consolas, monospace;
 
-  font-family: var(--sans);
+  font-family: var(--font-sans);
   line-height: 1.5;
   font-weight: 400;
   color: var(--text);
-  background:
-    radial-gradient(circle at top left, rgba(196, 138, 47, 0.18), transparent 28%),
-    linear-gradient(180deg, var(--bg), var(--bg-deep));
+  background: var(--app-bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -41,7 +47,7 @@ body,
 button,
 input,
 textarea {
-  font-family: var(--sans);
+  font-family: var(--font-sans);
 }
 
 h1,
@@ -54,20 +60,7 @@ strong {
 h1,
 h2,
 h3 {
-  font-family: var(--heading);
-  line-height: 1.05;
-}
-
-h1 {
-  font-size: clamp(2.2rem, 3vw, 3.4rem);
-}
-
-h2 {
-  font-size: clamp(1.4rem, 2vw, 2rem);
-}
-
-h3 {
-  font-size: 1.1rem;
+  line-height: 1.16;
 }
 
 button,
@@ -83,12 +76,17 @@ button {
 input:focus,
 textarea:focus,
 button:focus-visible {
-  outline: 2px solid rgba(166, 100, 44, 0.45);
+  outline: 2px solid rgba(93, 113, 228, 0.32);
   outline-offset: 2px;
 }
 
+textarea::placeholder,
+input::placeholder {
+  color: #9aa6b6;
+}
+
 code {
-  font-family: var(--mono);
+  font-family: var(--font-mono);
 }
 
 a {

@@ -1,0 +1,53 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="70" y2="70" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7487FF"/>
+      <stop offset="1" stop-color="#4E63E7"/>
+    </linearGradient>
+    <linearGradient id="scene" x1="0" y1="0" x2="420" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#82C5FF"/>
+      <stop offset="0.55" stop-color="#B8E4C7"/>
+      <stop offset="1" stop-color="#F2D6A4"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="20" stdDeviation="28" flood-color="#182235" flood-opacity="0.08"/>
+    </filter>
+    <style>
+      text { font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; fill: #1E2633; }
+      .page { fill: #F7F8FC; }
+      .shell { fill: #FFFFFF; stroke: rgba(32,42,58,0.10); filter: url(#shadow); }
+      .card { fill: #FFFFFF; stroke: rgba(32,42,58,0.10); }
+      .soft { fill: #F7F9FE; stroke: rgba(32,42,58,0.09); }
+      .selected { fill: #EEF2FF; stroke: rgba(86,103,235,0.14); }
+      .brand { fill: url(#brand); }
+      .line { stroke: rgba(32,42,58,0.10); }
+      .title { font-size: 29px; font-weight: 760; }
+      .h2 { font-size: 23px; font-weight: 740; }
+      .h3 { font-size: 18px; font-weight: 740; }
+      .body { font-size: 16px; }
+      .small { font-size: 14px; fill: #647084; }
+      .tiny { font-size: 12px; fill: #8993A3; }
+      .nav { font-size: 13px; font-weight: 700; fill: #5667EB; }
+      .chip { fill: #F4F6FB; stroke: rgba(32,42,58,0.08); }
+      .chipText { font-size: 13px; fill: #596579; font-weight: 700; }
+      .buttonText { font-size: 15px; fill: #fff; font-weight: 760; }
+    </style>
+  </defs>
+  <rect width="1600" height="900" class="page"/>
+  <text x="52" y="54" class="tiny">Prototype 04 / 创作场景</text>
+  
+      <rect x="72" y="44" width="1456" height="812" rx="18" class="shell"/>
+      <text x="112" y="88" class="title">←  创作场景</text><rect x="1340" y="62" width="130" height="38" rx="9" class="card"/><text x="1370" y="86" class="small">+ 新增场景</text>
+      <line x1="72" y1="116" x2="1528" y2="116" class="line"/>
+      <rect x="112" y="154" width="330" height="650" rx="10" class="soft"/><text x="136" y="196" class="tiny">场景列表</text>
+      <rect x="130" y="238" width="260" height="42" rx="8" class="selected"/><text x="152" y="265" class="nav">奶辉界 · 育生大陆</text>
+      <text x="152" y="326" class="body">云翼群岛 · 风语村</text><text x="152" y="386" class="body">古龙殿域 · 深渊入口</text><text x="152" y="446" class="body">天空裂隙 · 边境地带</text>
+      <rect x="470" y="154" width="960" height="650" rx="12" class="card"/>
+      <rect x="504" y="200" width="846" height="220" rx="14" fill="url(#scene)"/>
+      <path d="M540 380 C630 300 700 336 770 286 C850 230 910 330 996 260 C1090 190 1158 286 1288 218 L1350 420 L504 420 Z" fill="#FFFFFF" fill-opacity="0.62"/>
+      <text x="504" y="480" class="h2">奶辉界 · 育生大陆</text>
+      <text x="504" y="532" class="body">奶辉界最主要的地表区域，灵乳能量最为充沛，孕育了繁荣的文明与多样的生物。</text>
+      <text x="504" y="612" class="small">关联设定</text><rect x="504" y="636" width="106" height="34" rx="10" class="chip"/><text x="522" y="659" class="chipText">地理与环境</text><rect x="626" y="636" width="106" height="34" rx="10" class="chip"/><text x="644" y="659" class="chipText">种族与势力</text><rect x="748" y="636" width="106" height="34" rx="10" class="chip"/><text x="766" y="659" class="chipText">历史与事件</text>
+      <rect x="1226" y="730" width="124" height="38" rx="8" class="card"/><text x="1254" y="754" class="small">编辑场景</text>
+    
+</svg>

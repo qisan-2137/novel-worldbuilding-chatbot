@@ -1,0 +1,51 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="70" y2="70" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7487FF"/>
+      <stop offset="1" stop-color="#4E63E7"/>
+    </linearGradient>
+    <linearGradient id="scene" x1="0" y1="0" x2="420" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#82C5FF"/>
+      <stop offset="0.55" stop-color="#B8E4C7"/>
+      <stop offset="1" stop-color="#F2D6A4"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="20" stdDeviation="28" flood-color="#182235" flood-opacity="0.08"/>
+    </filter>
+    <style>
+      text { font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; fill: #1E2633; }
+      .page { fill: #F7F8FC; }
+      .shell { fill: #FFFFFF; stroke: rgba(32,42,58,0.10); filter: url(#shadow); }
+      .card { fill: #FFFFFF; stroke: rgba(32,42,58,0.10); }
+      .soft { fill: #F7F9FE; stroke: rgba(32,42,58,0.09); }
+      .selected { fill: #EEF2FF; stroke: rgba(86,103,235,0.14); }
+      .brand { fill: url(#brand); }
+      .line { stroke: rgba(32,42,58,0.10); }
+      .title { font-size: 29px; font-weight: 760; }
+      .h2 { font-size: 23px; font-weight: 740; }
+      .h3 { font-size: 18px; font-weight: 740; }
+      .body { font-size: 16px; }
+      .small { font-size: 14px; fill: #647084; }
+      .tiny { font-size: 12px; fill: #8993A3; }
+      .nav { font-size: 13px; font-weight: 700; fill: #5667EB; }
+      .chip { fill: #F4F6FB; stroke: rgba(32,42,58,0.08); }
+      .chipText { font-size: 13px; fill: #596579; font-weight: 700; }
+      .buttonText { font-size: 15px; fill: #fff; font-weight: 760; }
+    </style>
+  </defs>
+  <rect width="1600" height="900" class="page"/>
+  <text x="52" y="54" class="tiny">Prototype 06 / 聊天详情</text>
+  
+      <rect x="72" y="44" width="1456" height="812" rx="18" class="shell"/>
+      <text x="112" y="88" class="h2">←  帮我设计一个有关奶龙世界的世界观</text><rect x="1320" y="62" width="82" height="38" rx="9" class="card"/><text x="1344" y="86" class="small">分享</text><rect x="1418" y="62" width="74" height="38" rx="9" class="card"/><text x="1440" y="86" class="small">更多</text>
+      <line x1="72" y1="116" x2="1528" y2="116" class="line"/>
+      <rect x="868" y="154" width="500" height="48" rx="12" class="selected"/><text x="920" y="184" class="small">帮我设计一个拥有贵族血脉魔法和铁路工业革命并存的世界</text>
+      <text x="120" y="288" class="nav">⌘</text><rect x="190" y="250" width="1130" height="318" rx="12" class="card"/>
+      <text x="220" y="298" class="body">好的，以下是为你设计的世界观概要，包含科技体系、魔法体系和核心冲突。</text>
+      <rect x="220" y="350" width="1034" height="172" rx="10" class="soft"/><text x="250" y="392" class="h3">世界概览</text>
+      <text x="250" y="444" class="body">这是一个魔法与工业并存的世界，贵族掌握古老血脉魔法，工匠与工程师推动铁路与机械革命。</text>
+      <text x="250" y="484" class="body">新旧秩序的冲突，将决定整个世界的走向。</text>
+      <text x="726" y="548" class="h2">↓</text>
+      <rect x="112" y="742" width="1376" height="56" rx="12" class="card"/><text x="210" y="777" class="tiny">请输入你的问题，Shift + Enter 换行</text><rect x="1434" y="752" width="36" height="36" rx="10" class="brand"/>
+    
+</svg>

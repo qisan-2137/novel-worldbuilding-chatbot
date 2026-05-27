@@ -1,0 +1,57 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="70" y2="70" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7487FF"/>
+      <stop offset="1" stop-color="#4E63E7"/>
+    </linearGradient>
+    <linearGradient id="scene" x1="0" y1="0" x2="420" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#82C5FF"/>
+      <stop offset="0.55" stop-color="#B8E4C7"/>
+      <stop offset="1" stop-color="#F2D6A4"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="20" stdDeviation="28" flood-color="#182235" flood-opacity="0.08"/>
+    </filter>
+    <style>
+      text { font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; fill: #1E2633; }
+      .page { fill: #F7F8FC; }
+      .shell { fill: #FFFFFF; stroke: rgba(32,42,58,0.10); filter: url(#shadow); }
+      .card { fill: #FFFFFF; stroke: rgba(32,42,58,0.10); }
+      .soft { fill: #F7F9FE; stroke: rgba(32,42,58,0.09); }
+      .selected { fill: #EEF2FF; stroke: rgba(86,103,235,0.14); }
+      .brand { fill: url(#brand); }
+      .line { stroke: rgba(32,42,58,0.10); }
+      .title { font-size: 29px; font-weight: 760; }
+      .h2 { font-size: 23px; font-weight: 740; }
+      .h3 { font-size: 18px; font-weight: 740; }
+      .body { font-size: 16px; }
+      .small { font-size: 14px; fill: #647084; }
+      .tiny { font-size: 12px; fill: #8993A3; }
+      .nav { font-size: 13px; font-weight: 700; fill: #5667EB; }
+      .chip { fill: #F4F6FB; stroke: rgba(32,42,58,0.08); }
+      .chipText { font-size: 13px; fill: #596579; font-weight: 700; }
+      .buttonText { font-size: 15px; fill: #fff; font-weight: 760; }
+    </style>
+  </defs>
+  <rect width="1600" height="900" class="page"/>
+  <text x="52" y="54" class="tiny">Prototype 02 / 设置与大纲</text>
+  
+      <rect x="72" y="44" width="1456" height="812" rx="18" class="shell"/>
+      <text x="112" y="88" class="title">←  设置与大纲</text>
+      <text x="116" y="154" class="nav">世界观</text><text x="260" y="154" class="h3">大纲</text><text x="390" y="154" class="h3">设置</text>
+      <line x1="116" y1="176" x2="188" y2="176" class="line"/>
+      <rect x="112" y="202" width="206" height="604" rx="10" class="card"/>
+      <text x="136" y="242" class="h3">世界书页</text>
+      <rect x="132" y="282" width="158" height="42" rx="8" class="selected"/><text x="154" y="309" class="nav">奶辉界</text>
+      <text x="154" y="364" class="body">魔法体系</text><text x="154" y="424" class="body">种族与势力</text>
+      <text x="154" y="484" class="body">历史与事件</text><text x="154" y="544" class="body">地理与环境</text><text x="154" y="604" class="body">科技体系</text>
+      <rect x="132" y="752" width="158" height="38" rx="8" class="card"/><text x="158" y="776" class="small">+ 新建书页</text>
+      <rect x="340" y="202" width="1144" height="604" rx="10" class="card"/>
+      <text x="386" y="272" class="title">奶辉界</text><rect x="1390" y="240" width="74" height="36" rx="8" class="card"/><text x="1410" y="263" class="small">编辑</text>
+      <text x="386" y="326" class="body">一个由龙族、翼乳生物与古代天空遗迹共同构成的多层奇幻世界。</text>
+      <text x="386" y="392" class="body">奶辉界由三层空间组成：地表的育生大陆、漂浮于天空的云翼群岛，以及埋藏在深层地脉中的古龙殿域。这个世界的生命循环依赖一种名为“灵乳”的自然能量。</text>
+      <text x="386" y="458" class="body">多数龙族在出生后依赖奶辉界乳以幼龙形态存活，因此奶龙在文化上既是弱小象征，也是希望象征。</text>
+      <text x="386" y="552" class="body">表面世界天空澄澈，实际上是灵乳流动的能量流系统，许多地区开始出现长停滞、族群异变与古遗迹苏醒。</text>
+      <text x="386" y="760" class="tiny">最后更新：今天 21:12</text><rect x="1362" y="742" width="102" height="38" rx="8" class="card"/><text x="1382" y="766" class="small">历史版本</text>
+    
+</svg>

@@ -1,0 +1,159 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#EDF3F6"/>
+    </linearGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="190" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3D6784"/>
+      <stop offset="1" stop-color="#2F4F6D"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#1D2F3E" flood-opacity="0.09"/>
+    </filter>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #213140; }
+      .label { font-size: 12px; font-weight: 800; letter-spacing: 2.6px; fill: #4D7EA6; }
+      .title { font-size: 30px; font-weight: 760; }
+      .h2 { font-size: 23px; font-weight: 760; }
+      .body { font-size: 18px; }
+      .small { font-size: 15px; }
+      .tiny { font-size: 13px; }
+      .muted { fill: #6B7D8F; }
+      .soft { fill: #9AABBA; }
+      .chip { font-size: 14px; font-weight: 700; fill: #43596C; }
+      .white { fill: #FFFFFF; font-weight: 760; }
+      .panel { fill: rgba(255,255,255,0.88); stroke: rgba(70,91,112,0.14); }
+      .surface { fill: rgba(248,251,253,0.96); stroke: rgba(70,91,112,0.13); }
+      .selected { fill: rgba(79,126,166,0.11); stroke: rgba(79,126,166,0.23); }
+      .line { stroke: rgba(70,91,112,0.14); }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <circle cx="112" cy="92" r="230" fill="#86A9C8" fill-opacity="0.10"/>
+  <circle cx="1494" cy="886" r="190" fill="#E0B86F" fill-opacity="0.08"/>
+
+  <rect x="32" y="28" width="1536" height="124" rx="20" class="panel" filter="url(#shadow)"/>
+  <text x="64" y="62" class="label">NOVEL WORLDBUILDING CHATBOT</text>
+  <text x="64" y="105" class="title">Rail Empire Project</text>
+  <text x="64" y="134" class="tiny muted">A cleaner creative cockpit for real AI chat, worldbuilding notes, and outline planning.</text>
+
+  <rect x="430" y="78" width="284" height="38" rx="19" fill="rgba(79,126,166,0.10)" stroke="rgba(79,126,166,0.15)"/>
+  <text x="452" y="102" class="chip">Current session: Arcane Railways</text>
+
+  <rect x="770" y="70" width="130" height="44" rx="13" class="selected"/>
+  <text x="795" y="98" class="small" font-weight="700">Workspace</text>
+  <rect x="914" y="70" width="124" height="44" rx="13" fill="#FFFFFF" stroke="rgba(70,91,112,0.14)"/>
+  <text x="944" y="98" class="small" font-weight="700">Lore Library</text>
+  <rect x="1052" y="70" width="128" height="44" rx="13" fill="#FFFFFF" stroke="rgba(70,91,112,0.14)"/>
+  <text x="1082" y="98" class="small" font-weight="700">Outline Lab</text>
+
+  <rect x="1210" y="54" width="86" height="32" rx="16" fill="rgba(79,126,166,0.08)"/>
+  <text x="1232" y="75" class="chip">3 chats</text>
+  <rect x="1308" y="54" width="96" height="32" rx="16" fill="rgba(79,126,166,0.08)"/>
+  <text x="1328" y="75" class="chip">18 notes</text>
+  <rect x="1416" y="54" width="90" height="32" rx="16" fill="rgba(79,126,166,0.08)"/>
+  <text x="1438" y="75" class="chip">9 beats</text>
+  <rect x="1348" y="100" width="158" height="38" rx="12" fill="#FFFFFF" stroke="rgba(70,91,112,0.14)"/>
+  <text x="1390" y="124" class="small" font-weight="700">Settings</text>
+
+  <rect x="32" y="174" width="252" height="794" rx="20" class="panel" filter="url(#shadow)"/>
+  <text x="56" y="208" class="label">SESSIONS</text>
+  <text x="56" y="243" class="h2">Story Rooms</text>
+  <text x="56" y="270" class="tiny muted">Recent conversations stay compact.</text>
+  <rect x="56" y="298" width="204" height="46" rx="13" fill="url(#ink)"/>
+  <text x="110" y="327" class="small white">New Chat</text>
+
+  <rect x="56" y="370" width="204" height="84" rx="15" class="selected"/>
+  <text x="74" y="400" class="small" font-weight="760">Rail Empire</text>
+  <text x="74" y="428" class="tiny muted">Today 21:10</text>
+  <rect x="56" y="466" width="204" height="84" rx="15" class="surface"/>
+  <text x="74" y="496" class="small" font-weight="760">Steam Cultivators</text>
+  <text x="74" y="524" class="tiny muted">Yesterday 19:42</text>
+  <rect x="56" y="562" width="204" height="84" rx="15" class="surface"/>
+  <text x="74" y="592" class="small" font-weight="760">Frontier Republic</text>
+  <text x="74" y="620" class="tiny muted">May 18</text>
+
+  <line x1="56" y1="690" x2="260" y2="690" class="line"/>
+  <text x="56" y="728" class="label">PROMPT IDEAS</text>
+  <text x="56" y="760" class="small" font-weight="760">Quick starts</text>
+  <rect x="56" y="782" width="204" height="60" rx="15" class="surface"/>
+  <text x="74" y="808" class="tiny" font-weight="700">Design magic industry</text>
+  <text x="74" y="828" class="tiny muted">Lore / conflict</text>
+  <rect x="56" y="856" width="204" height="60" rx="15" class="surface"/>
+  <text x="74" y="882" class="tiny" font-weight="700">Classify tech systems</text>
+  <text x="74" y="902" class="tiny muted">Rules / cost / limits</text>
+
+  <rect x="304" y="174" width="850" height="794" rx="20" class="panel" filter="url(#shadow)"/>
+  <text x="334" y="208" class="label">WORKSPACE</text>
+  <text x="334" y="246" class="h2">Arcane Railways and Classical Academy</text>
+  <text x="334" y="276" class="small muted">Goal: refine technology system, magic system, and Act I conflict.</text>
+
+  <rect x="896" y="204" width="220" height="88" rx="15" fill="rgba(245,249,252,0.94)" stroke="rgba(70,91,112,0.13)"/>
+  <rect x="916" y="222" width="74" height="28" rx="14" fill="rgba(79,126,166,0.12)"/>
+  <text x="930" y="241" class="tiny" font-weight="760">Live API</text>
+  <text x="916" y="268" class="tiny muted">AI responses are saved</text>
+  <text x="916" y="288" class="tiny muted">as lore notes and beats.</text>
+
+  <rect x="334" y="330" width="760" height="86" rx="15" class="surface"/>
+  <text x="354" y="358" class="tiny muted">Author - 21:08</text>
+  <text x="354" y="388" class="body">Expand the conflict between the railway empire and the old academy.</text>
+
+  <rect x="334" y="436" width="760" height="196" rx="15" fill="#FFFFFF" stroke="rgba(70,91,112,0.14)"/>
+  <text x="354" y="464" class="tiny muted">AI Guide - 21:09</text>
+  <text x="354" y="498" class="body">Frame the conflict around control of transit, oath magic, and public safety.</text>
+  <text x="354" y="532" class="body">The empire wants standardized arcane engines. The academy fears rule-free power.</text>
+  <text x="354" y="566" class="body">Act I can start with a border train disaster that reveals a broken old seal.</text>
+  <text x="354" y="600" class="body">This pushes the protagonist between state engineers, mages, and frontier unrest.</text>
+
+  <rect x="334" y="666" width="760" height="246" rx="17" fill="rgba(247,250,252,0.94)" stroke="rgba(70,91,112,0.14)"/>
+  <text x="356" y="700" class="label">PROMPT</text>
+  <text x="356" y="732" class="small" font-weight="760">Creative input</text>
+  <text x="858" y="732" class="tiny muted">Enter to send / Shift + Enter for newline</text>
+  <rect x="356" y="756" width="716" height="96" rx="13" fill="#FFFFFF" stroke="rgba(70,91,112,0.16)"/>
+  <text x="378" y="790" class="small muted">Continue with academy factions and make the technology feel more military...</text>
+  <rect x="356" y="872" width="230" height="32" rx="16" fill="rgba(79,126,166,0.08)"/>
+  <text x="374" y="893" class="chip">Auto-save lore and outline</text>
+  <rect x="882" y="862" width="190" height="42" rx="13" fill="url(#ink)"/>
+  <text x="910" y="889" class="small white">Send + Organize</text>
+
+  <rect x="1174" y="174" width="394" height="794" rx="20" class="panel" filter="url(#shadow)"/>
+  <text x="1200" y="208" class="label">SUMMARY</text>
+  <text x="1200" y="243" class="h2">Structured Notes</text>
+  <rect x="1488" y="208" width="48" height="34" rx="10" fill="#FFFFFF" stroke="rgba(70,91,112,0.14)"/>
+  <text x="1499" y="231" class="tiny muted">Hide</text>
+
+  <text x="1200" y="292" class="small" font-weight="760">New this round</text>
+  <text x="1200" y="318" class="tiny muted">Show what the chat just distilled.</text>
+  <rect x="1200" y="340" width="336" height="96" rx="15" class="surface"/>
+  <rect x="1218" y="356" width="92" height="26" rx="13" fill="rgba(79,126,166,0.10)"/>
+  <text x="1230" y="374" class="tiny" font-weight="760">Technology</text>
+  <text x="1218" y="404" class="small" font-weight="760">Military railway industry</text>
+  <text x="1218" y="424" class="tiny muted">Armored engines, rail guns, and frontier logistics.</text>
+
+  <rect x="1200" y="450" width="336" height="96" rx="15" class="surface"/>
+  <rect x="1218" y="466" width="72" height="26" rx="13" fill="rgba(79,126,166,0.10)"/>
+  <text x="1230" y="484" class="tiny" font-weight="760">Conflict</text>
+  <text x="1218" y="514" class="small" font-weight="760">Efficiency vs. old legitimacy</text>
+  <text x="1218" y="534" class="tiny muted">Both sides claim they are saving the country.</text>
+
+  <line x1="1200" y1="582" x2="1536" y2="582" class="line"/>
+  <text x="1200" y="624" class="small" font-weight="760">Worldbuilding overview</text>
+  <rect x="1430" y="600" width="106" height="34" rx="10" fill="#FFFFFF" stroke="rgba(70,91,112,0.14)"/>
+  <text x="1450" y="623" class="tiny muted">Open Library</text>
+  <rect x="1200" y="648" width="336" height="52" rx="13" class="surface"/>
+  <text x="1218" y="672" class="small" font-weight="760">Background</text>
+  <text x="1458" y="672" class="tiny muted">Ready</text>
+  <rect x="1200" y="710" width="336" height="52" rx="13" class="surface"/>
+  <text x="1218" y="734" class="small" font-weight="760">Magic System</text>
+  <text x="1458" y="734" class="tiny muted">Ready</text>
+  <rect x="1200" y="772" width="336" height="52" rx="13" class="surface"/>
+  <text x="1218" y="796" class="small" font-weight="760">Plot Outline</text>
+  <text x="1458" y="796" class="tiny muted">9 beats</text>
+
+  <line x1="1200" y1="850" x2="1536" y2="850" class="line"/>
+  <text x="1200" y="890" class="small" font-weight="760">Outline preview</text>
+  <text x="1200" y="918" class="tiny muted">Act I: train disaster and forbidden archive</text>
+  <text x="1200" y="944" class="tiny muted">Act II: frontier collapse and political fracture</text>
+</svg>
