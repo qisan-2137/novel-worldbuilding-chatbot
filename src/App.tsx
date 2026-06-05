@@ -28,33 +28,6 @@ const promptIdeas = [
   '请为一个修真与蒸汽机械并存的长篇小说设计科技体系、魔法体系和三幕式大纲。',
 ]
 
-const viewMeta = {
-  workspace: {
-    label: '会话',
-    description: '用真实对话生成设定，并把结果即时沉淀成世界观与大纲。',
-  },
-  worldbuilding: {
-    label: '设置与大纲',
-    description: '用世界书页组织设定、配置和版本。',
-  },
-  outline: {
-    label: '大纲',
-    description: '把剧情节点从聊天草稿整理成可推进的结构。',
-  },
-  scenes: {
-    label: '创作场景',
-    description: '按地点和氛围管理故事场景。',
-  },
-  inspiration: {
-    label: '灵感库',
-    description: '收纳能继续扩写的创作素材。',
-  },
-  chat: {
-    label: '聊天详情',
-    description: '聚焦当前会话的一次完整问答。',
-  },
-} as const
-
 const outlineKindLabels: Record<OutlineKind, string> = {
   premise: 'Premise',
   act: '幕',
@@ -448,26 +421,16 @@ function App() {
   }
 
   return (
-    <div className="app-shell">
-      <GlobalSidebar
-        currentView={currentView}
-        onOpenSettings={() => setSettingsOpen(true)}
-        onNavigate={navigateTo}
-      />
+    <div className={`app-shell app-shell--${currentView}`}>
+      {currentView === 'workspace' ? (
+        <GlobalSidebar
+          currentView={currentView}
+          onOpenSettings={() => setSettingsOpen(true)}
+          onNavigate={navigateTo}
+        />
+      ) : null}
 
       <div className="app-main">
-        {currentView === 'workspace' ? (
-          <AppTopbar
-            activeSession={activeSession}
-            currentView={currentView}
-            onOpenSettings={() => setSettingsOpen(true)}
-            outlineCount={outlineNodes.length}
-            project={project}
-            sessionCount={sessions.length}
-            worldbuildingCount={worldbuildingEntries.length}
-          />
-        ) : null}
-
         {statusMessage ? <div className="status-banner">{statusMessage}</div> : null}
 
         {currentView === 'workspace' ? (
@@ -478,6 +441,7 @@ function App() {
               onCreateNewSession={() => void createNewSession()}
               onOpenSession={(sessionId) => void openSession(sessionId)}
               onPickPrompt={setComposerValue}
+              project={project}
               promptIdeas={promptIdeas}
               sessionPending={sessionPending}
               sessions={sessions}
@@ -489,9 +453,10 @@ function App() {
               composerValue={composerValue}
               messages={messages}
               onComposerChange={setComposerValue}
+              onOpenSettings={() => setSettingsOpen(true)}
               onPickPrompt={setComposerValue}
+              onShare={() => void shareCurrentPage(project.name)}
               onSendMessage={() => void sendMessage()}
-              project={project}
               promptIdeas={promptIdeas}
             />
 
@@ -510,7 +475,7 @@ function App() {
 
         {currentView === 'worldbuilding' ? (
           <WorldbuildingLibraryView
-            onOpenSettings={() => setSettingsOpen(true)}
+            onBack={() => navigateTo('workspace')}
             sessions={sessions}
             settingsDraft={settingsDraft}
             setSettingsDraft={setSettingsDraft}
@@ -521,15 +486,24 @@ function App() {
         ) : null}
 
         {currentView === 'outline' ? (
-          <OutlineStudioView outlineNodes={outlineNodes} sessions={sessions} />
+          <OutlineStudioView
+            onBack={() => navigateTo('workspace')}
+            outlineNodes={outlineNodes}
+            sessions={sessions}
+          />
         ) : null}
 
         {currentView === 'scenes' ? (
-          <CreativeScenesView worldbuildingEntries={worldbuildingEntries} />
+          <CreativeScenesView
+            onBack={() => navigateTo('workspace')}
+            worldbuildingEntries={worldbuildingEntries}
+          />
         ) : null}
 
         {currentView === 'inspiration' ? (
           <InspirationLibraryView
+            onBack={() => navigateTo('workspace')}
+            onNavigate={navigateTo}
             outlineNodes={outlineNodes}
             worldbuildingEntries={worldbuildingEntries}
           />
@@ -541,7 +515,10 @@ function App() {
             chatPending={chatPending}
             composerValue={composerValue}
             messages={messages}
+            onBack={() => navigateTo('workspace')}
             onComposerChange={setComposerValue}
+            onOpenSettings={() => setSettingsOpen(true)}
+            onShare={() => void shareCurrentPage(project.name)}
             onSendMessage={() => void sendMessage()}
           />
         ) : null}
@@ -557,6 +534,15 @@ function App() {
       />
     </div>
   )
+}
+
+async function shareCurrentPage(title: string) {
+  if (navigator.share) {
+    await navigator.share({ title, url: window.location.href })
+    return
+  }
+
+  await navigator.clipboard?.writeText(window.location.href)
 }
 
 function Icon({ name }: { name: IconName }) {
@@ -642,11 +628,9 @@ type GlobalSidebarProps = {
 function GlobalSidebar({ currentView, onNavigate, onOpenSettings }: GlobalSidebarProps) {
   const navItems: Array<{ icon: IconName; label: string; view: AppView }> = [
     { icon: 'chat', label: '会话', view: 'workspace' },
-    { icon: 'outline', label: '大纲', view: 'outline' },
-    { icon: 'scene', label: '创作场景', view: 'scenes' },
-    { icon: 'idea', label: '灵感库', view: 'inspiration' },
-    { icon: 'library', label: '设定集', view: 'worldbuilding' },
-    { icon: 'spark', label: '详情', view: 'chat' },
+    { icon: 'outline', label: '文档', view: 'outline' },
+    { icon: 'library', label: '世界观库', view: 'worldbuilding' },
+    { icon: 'idea', label: '素材库', view: 'inspiration' },
   ]
 
   return (
@@ -677,75 +661,13 @@ function GlobalSidebar({ currentView, onNavigate, onOpenSettings }: GlobalSideba
   )
 }
 
-type AppTopbarProps = {
-  activeSession: Session
-  currentView: AppView
-  onOpenSettings: () => void
-  outlineCount: number
-  project: Project
-  sessionCount: number
-  worldbuildingCount: number
-}
-
-function AppTopbar({
-  activeSession,
-  currentView,
-  onOpenSettings,
-  outlineCount,
-  project,
-  sessionCount,
-  worldbuildingCount,
-}: AppTopbarProps) {
-  return (
-    <header className="app-topbar">
-      <div className="brand-column">
-        <p className="eyebrow">{viewMeta[currentView].label}</p>
-        <div className="brand-title-row">
-          <h1>{project.name}</h1>
-          <span className="active-session-pill">当前：{activeSession.title}</span>
-        </div>
-        <p className="page-description">{project.description || viewMeta[currentView].description}</p>
-      </div>
-
-      <div className="topbar-tools">
-        <div className="metric-row">
-          <span className="metric-chip">{sessionCount} 会话</span>
-          <span className="metric-chip">{worldbuildingCount} 设定</span>
-          <span className="metric-chip">{outlineCount} 大纲</span>
-        </div>
-        <div className="action-row">
-          <button
-            type="button"
-            className="secondary-button"
-            onClick={() => {
-              if (navigator.share) {
-                void navigator.share({ title: project.name, url: window.location.href })
-                return
-              }
-
-              void navigator.clipboard?.writeText(window.location.href)
-            }}
-          >
-            分享
-          </button>
-          <button type="button" className="secondary-button" onClick={onOpenSettings}>
-            更多
-          </button>
-          <button type="button" className="secondary-button" onClick={onOpenSettings}>
-            设置
-          </button>
-        </div>
-      </div>
-    </header>
-  )
-}
-
 type SessionSidebarProps = {
   activeSessionId: string
   chatPending: boolean
   onCreateNewSession: () => void
   onOpenSession: (sessionId: string) => void
   onPickPrompt: (prompt: string) => void
+  project: Project
   promptIdeas: string[]
   sessionPending: boolean
   sessions: Session[]
@@ -757,30 +679,43 @@ function SessionSidebar({
   onCreateNewSession,
   onOpenSession,
   onPickPrompt,
+  project,
   promptIdeas,
   sessionPending,
   sessions,
 }: SessionSidebarProps) {
+  const todaySessions = sessions.slice(0, 4)
+  const olderSessions = sessions.slice(4)
+
   return (
-    <aside className="panel session-sidebar">
-      <div className="panel-header panel-header--stacked">
+    <aside className="session-sidebar">
+      <div className="session-brand-row">
         <div>
-          <p className="section-kicker">Conversations</p>
-          <h2>会话</h2>
-          <p className="subtle">按创作问题组织，不让草稿和设定混在一起。</p>
+          <h1>{project.name}</h1>
+          <p>{project.description || '围绕同一部小说的世界观、灵感与设定'}</p>
         </div>
+        <span>⌄</span>
+      </div>
+
+      <div className="session-tools">
+        <span aria-hidden="true">⌕</span>
+        <span aria-hidden="true">↕</span>
+      </div>
+
+      <div className="new-session-wrap">
         <button
           type="button"
-          className="primary-button primary-button--wide"
+          className="new-session-button"
           onClick={onCreateNewSession}
           disabled={sessionPending}
         >
-          {sessionPending ? '创建中...' : '新建会话'}
+          {sessionPending ? '创建中...' : '+ 新建会话'}
         </button>
       </div>
 
       <div className="session-list">
-        {sessions.map((session) => (
+        <span className="session-group-label">今天</span>
+        {todaySessions.map((session) => (
           <button
             key={session.id}
             type="button"
@@ -788,19 +723,28 @@ function SessionSidebar({
             onClick={() => onOpenSession(session.id)}
             disabled={sessionPending || chatPending}
           >
+            <span className="session-icon">☁</span>
             <strong>{session.title}</strong>
-            <span>最后更新 {formatDateTime(session.updatedAt)}</span>
+            <time>{formatDateTime(session.updatedAt).split(' ').slice(-1)[0]}</time>
+          </button>
+        ))}
+        {olderSessions.length ? <span className="session-group-label">更早</span> : null}
+        {olderSessions.map((session) => (
+          <button
+            key={session.id}
+            type="button"
+            className={session.id === activeSessionId ? 'session-card active' : 'session-card'}
+            onClick={() => onOpenSession(session.id)}
+            disabled={sessionPending || chatPending}
+          >
+            <span className="session-icon">☁</span>
+            <strong>{session.title}</strong>
+            <time>{formatDateOnly(session.updatedAt)}</time>
           </button>
         ))}
       </div>
 
-      <div className="sidebar-hints">
-        <div className="panel-header panel-header--tight">
-          <div>
-            <p className="section-kicker">Prompt Ideas</p>
-            <h3>灵感起手</h3>
-          </div>
-        </div>
+      <div className="sidebar-hints" hidden>
         <div className="idea-list">
           {promptIdeas.map((idea) => (
             <button
@@ -814,6 +758,10 @@ function SessionSidebar({
           ))}
         </div>
       </div>
+
+      <button type="button" className="trash-button">
+        回收站
+      </button>
     </aside>
   )
 }
@@ -824,9 +772,10 @@ type WorkspacePanelProps = {
   composerValue: string
   messages: Message[]
   onComposerChange: (value: string) => void
+  onOpenSettings: () => void
   onPickPrompt: (prompt: string) => void
+  onShare: () => void
   onSendMessage: () => void
-  project: Project
   promptIdeas: string[]
 }
 
@@ -836,24 +785,25 @@ function WorkspacePanel({
   composerValue,
   messages,
   onComposerChange,
+  onOpenSettings,
   onPickPrompt,
+  onShare,
   onSendMessage,
-  project,
   promptIdeas,
 }: WorkspacePanelProps) {
   return (
-    <main className="panel workspace-panel">
-      <div className="workspace-heading">
-        <div>
-          <p className="section-kicker">Chat Workspace</p>
-          <h2>{activeSession.title}</h2>
-          <p className="workspace-subtitle">{project.description}</p>
+    <main className="workspace-panel">
+      <header className="workspace-heading">
+        <h2>{activeSession.title}</h2>
+        <div className="action-row">
+          <button type="button" className="secondary-button" onClick={onShare}>
+            分享
+          </button>
+          <button type="button" className="secondary-button" onClick={onOpenSettings}>
+            更多
+          </button>
         </div>
-        <div className="focus-card">
-          <span className="focus-badge">真实 AI 对话</span>
-          <p>每次回复都会同步更新世界观条目和大纲节点。</p>
-        </div>
-      </div>
+      </header>
 
       <div className="message-stream">
         {messages.length ? (
@@ -867,10 +817,18 @@ function WorkspacePanel({
               </div>
               <div className="message-body">
                 <div className="message-meta">
-                  <strong>{message.role === 'user' ? '作者' : '助手'}</strong>
+                  <strong>{message.role === 'user' ? '你' : 'AI 助手'}</strong>
                   <span>{formatDateTime(message.createdAt)}</span>
                 </div>
                 <p>{message.content}</p>
+                {message.role === 'assistant' ? (
+                  <div className="message-actions" aria-hidden="true">
+                    <span>□</span>
+                    <span>↻</span>
+                    <span>♡</span>
+                    <span>♧</span>
+                  </div>
+                ) : null}
               </div>
             </article>
           ))
@@ -898,14 +856,6 @@ function WorkspacePanel({
       </div>
 
       <div className="composer-shell">
-        <div className="composer-header">
-          <div>
-            <p className="section-kicker">Prompt</p>
-            <h3>继续推进这个世界</h3>
-          </div>
-          <span className="subtle">Enter 发送，Shift + Enter 换行</span>
-        </div>
-
         <textarea
           value={composerValue}
           onChange={(event) => onComposerChange(event.target.value)}
@@ -915,14 +865,16 @@ function WorkspacePanel({
               onSendMessage()
             }
           }}
-          placeholder="例如：帮我设计一个拥有贵族血脉魔法和铁路工业革命并存的世界，并整理科技体系、魔法体系和核心冲突。"
-          rows={5}
+          placeholder="输入你的问题或想法，Enter 发送，Shift + Enter 换行"
+          rows={3}
           disabled={chatPending}
         />
 
         <div className="composer-actions">
-          <div className="composer-notes">
-            <span className="metric-chip">当前重点：世界观与大纲同步沉淀</span>
+          <div className="composer-icons" aria-hidden="true">
+            <span>＋</span>
+            <span>◎</span>
+            <span>⌘</span>
           </div>
           <button
             type="button"
@@ -930,7 +882,6 @@ function WorkspacePanel({
             onClick={onSendMessage}
             disabled={chatPending || !composerValue.trim()}
           >
-            <span>{chatPending ? '生成中...' : '发送并整理'}</span>
             <Icon name="send" />
           </button>
         </div>
@@ -1090,7 +1041,7 @@ function WorkspaceSummaryPanel({
 }
 
 type WorldbuildingLibraryViewProps = {
-  onOpenSettings: () => void
+  onBack: () => void
   onSaveSettings: () => void
   sessions: Session[]
   setSettingsDraft: React.Dispatch<React.SetStateAction<SettingsInput>>
@@ -1100,7 +1051,7 @@ type WorldbuildingLibraryViewProps = {
 }
 
 function WorldbuildingLibraryView({
-  onOpenSettings,
+  onBack,
   onSaveSettings,
   sessions,
   setSettingsDraft,
@@ -1129,7 +1080,7 @@ function WorldbuildingLibraryView({
     <div className="reference-page worldbook-page">
       <header className="reference-header">
         <div>
-          <button type="button" className="back-button" onClick={onOpenSettings}>
+          <button type="button" className="back-button" onClick={onBack} aria-label="返回会话">
             ←
           </button>
           <h2>设置与大纲</h2>
@@ -1290,11 +1241,12 @@ function WorldbuildingLibraryView({
 }
 
 type OutlineStudioViewProps = {
+  onBack: () => void
   outlineNodes: OutlineNode[]
   sessions: Session[]
 }
 
-function OutlineStudioView({ outlineNodes, sessions }: OutlineStudioViewProps) {
+function OutlineStudioView({ onBack, outlineNodes, sessions }: OutlineStudioViewProps) {
   const [outlineFilter, setOutlineFilter] = useState<'全部' | OutlineKind>('全部')
   const [selectedNodeId, setSelectedNodeId] = useState('')
 
@@ -1311,7 +1263,7 @@ function OutlineStudioView({ outlineNodes, sessions }: OutlineStudioViewProps) {
     <div className="reference-page outline-reference-page">
       <header className="reference-header">
         <div>
-          <button type="button" className="back-button">
+          <button type="button" className="back-button" onClick={onBack} aria-label="返回会话">
             ←
           </button>
           <h2>大纲</h2>
@@ -1408,45 +1360,24 @@ function OutlineStudioView({ outlineNodes, sessions }: OutlineStudioViewProps) {
 }
 
 type CreativeScenesViewProps = {
+  onBack: () => void
   worldbuildingEntries: WorldbuildingEntry[]
 }
 
-function CreativeScenesView({ worldbuildingEntries }: CreativeScenesViewProps) {
-  const sceneEntries = sortWorldbuildingEntries(
+function CreativeScenesView({ onBack, worldbuildingEntries }: CreativeScenesViewProps) {
+  const scenes = sortWorldbuildingEntries(
     worldbuildingEntries.filter((entry) =>
       ['世界背景', '地域势力', '历史沿革', '角色阵营'].includes(entry.category),
     ),
   )
-  const scenes = sceneEntries.length
-    ? sceneEntries.slice(0, 5)
-    : [
-        {
-          id: 'fallback-scene-1',
-          title: '奶辉界 · 育生大陆',
-          summary: '奶辉界最主要的地表区域，灵乳能量最为充沛，孕育了繁荣的文明与多样的生物。',
-          category: '地理与环境',
-        },
-        {
-          id: 'fallback-scene-2',
-          title: '云翼群岛 · 风语村',
-          summary: '漂浮岛屿之间由风桥连接，是天空族群和幼龙共同生活的区域。',
-          category: '种族与势力',
-        },
-        {
-          id: 'fallback-scene-3',
-          title: '古龙殿域 · 深渊入口',
-          summary: '深层地脉中的古龙遗迹，保存着灵乳循环被建立之前的秘密。',
-          category: '历史与事件',
-        },
-      ]
   const [selectedSceneId, setSelectedSceneId] = useState(scenes[0]?.id ?? '')
-  const activeScene = scenes.find((scene) => scene.id === selectedSceneId) ?? scenes[0]
+  const activeScene = scenes.find((scene) => scene.id === selectedSceneId) ?? scenes[0] ?? null
 
   return (
     <div className="reference-page scenes-page">
       <header className="reference-header">
         <div>
-          <button type="button" className="back-button">
+          <button type="button" className="back-button" onClick={onBack} aria-label="返回会话">
             ←
           </button>
           <h2>创作场景</h2>
@@ -1460,38 +1391,57 @@ function CreativeScenesView({ worldbuildingEntries }: CreativeScenesViewProps) {
         <aside className="chapter-sidebar">
           <span className="tiny-label">场景列表</span>
           <div className="filter-list">
-            {scenes.map((scene) => (
-              <button
-                key={scene.id}
-                type="button"
-                className={activeScene.id === scene.id ? 'filter-chip active' : 'filter-chip'}
-                onClick={() => setSelectedSceneId(scene.id)}
-              >
-                <span>{scene.title}</span>
-              </button>
-            ))}
+            {scenes.length ? (
+              scenes.slice(0, 6).map((scene) => (
+                <button
+                  key={scene.id}
+                  type="button"
+                  className={activeScene?.id === scene.id ? 'scene-card active' : 'scene-card'}
+                  onClick={() => setSelectedSceneId(scene.id)}
+                >
+                  <span className="scene-thumb" aria-hidden="true" />
+                  <span className="scene-card-title">{scene.title}</span>
+                  <span className="scene-card-check" aria-hidden="true">
+                    ✓
+                  </span>
+                </button>
+              ))
+            ) : (
+              <div className="empty-panel scene-empty-panel">
+                <h3>还没有可整理的场景</h3>
+                <p>先回到会话页生成世界背景、地域势力、历史沿革或角色阵营条目。</p>
+              </div>
+            )}
           </div>
         </aside>
 
         <main className="scene-detail-panel">
-          <div className="scene-visual" aria-hidden="true">
-            <div className="floating-island island-one" />
-            <div className="floating-island island-two" />
-            <div className="floating-island island-three" />
-          </div>
-          <h2>{activeScene.title}</h2>
-          <p className="lead-copy">{activeScene.summary}</p>
-          <div>
-            <span className="tiny-label">关联设定</span>
-            <div className="tag-row">
-              <span className="mini-label">{activeScene.category}</span>
-              <span className="mini-label">种族与势力</span>
-              <span className="mini-label">历史与事件</span>
+          {activeScene ? (
+            <>
+              <div className="scene-visual" aria-hidden="true">
+                <div className="floating-island island-one" />
+                <div className="floating-island island-two" />
+                <div className="floating-island island-three" />
+              </div>
+              <h2>{activeScene.title}</h2>
+              <p className="lead-copy">{activeScene.summary}</p>
+              <div>
+                <span className="tiny-label">关联设定</span>
+                <div className="tag-row">
+                  <span className="mini-label">{activeScene.category}</span>
+                  <span className="mini-label">来源：真实 AI 对话</span>
+                </div>
+              </div>
+              <button type="button" className="secondary-button scene-edit-button">
+                编辑场景
+              </button>
+            </>
+          ) : (
+            <div className="empty-panel scene-empty-panel">
+              <h3>场景面板等待真实内容</h3>
+              <p>这里不会展示预设场景。完成一次真实 AI 对话后，D1 中的设定会出现在这里。</p>
             </div>
-          </div>
-          <button type="button" className="secondary-button scene-edit-button">
-            编辑场景
-          </button>
+          )}
         </main>
       </div>
     </div>
@@ -1499,11 +1449,15 @@ function CreativeScenesView({ worldbuildingEntries }: CreativeScenesViewProps) {
 }
 
 type InspirationLibraryViewProps = {
+  onBack: () => void
+  onNavigate: (view: AppView) => void
   outlineNodes: OutlineNode[]
   worldbuildingEntries: WorldbuildingEntry[]
 }
 
 function InspirationLibraryView({
+  onBack,
+  onNavigate,
   outlineNodes,
   worldbuildingEntries,
 }: InspirationLibraryViewProps) {
@@ -1524,67 +1478,81 @@ function InspirationLibraryView({
       time: `#${node.position}`,
     })),
   ]
-  const fallbackInspirations = [
-    {
-      id: 'fallback-inspiration-1',
-      label: '世界观',
-      title: '灵乳能量失衡导致的生态异变',
-      subtitle: '幻想素材',
-      time: '2天前',
-    },
-    {
-      id: 'fallback-inspiration-2',
-      label: '科技体系',
-      title: '龙族失落技术“脉能核心”',
-      subtitle: '设定素材',
-      time: '3天前',
-    },
-    {
-      id: 'fallback-inspiration-3',
-      label: '历史与事件',
-      title: '古龙晚钟的沉睡守护者',
-      subtitle: '历史与事件',
-      time: '5天前',
-    },
-  ]
-  const visibleInspirations = (inspirations.length ? inspirations : fallbackInspirations).filter(
-    (item) => `${item.label} ${item.title} ${item.subtitle}`.includes(query.trim()),
+  const normalizedQuery = query.trim().toLowerCase()
+  const visibleInspirations = inspirations.filter((item) =>
+    `${item.label} ${item.title} ${item.subtitle}`.toLowerCase().includes(normalizedQuery),
   )
 
   return (
-    <div className="reference-page inspiration-page">
-      <header className="reference-header">
-        <div>
-          <button type="button" className="back-button">
-            ←
+    <div className="inspiration-shell">
+      <aside className="inspiration-rail">
+        <div className="rail-mark">♞</div>
+        <nav>
+          <button type="button" onClick={() => onNavigate('workspace')}>
+            对话
           </button>
-          <h2>灵感库</h2>
+          <button type="button" onClick={() => onNavigate('worldbuilding')}>
+            世界观
+          </button>
+          <span>角色</span>
+          <span className="active">灵感库</span>
+          <span>笔记</span>
+          <span>时间线</span>
+          <button type="button" onClick={() => onNavigate('worldbuilding')}>
+            设定集
+          </button>
+        </nav>
+        <div className="rail-bottom">
+          <span>回收站</span>
+          <span>设置</span>
         </div>
-      </header>
+      </aside>
+      <div className="reference-page inspiration-page">
+        <header className="reference-header">
+          <div>
+            <button type="button" className="back-button" onClick={onBack} aria-label="返回会话">
+              ←
+            </button>
+            <h2>灵感库</h2>
+          </div>
+        </header>
 
-      <div className="inspiration-toolbar">
-        <input
-          className="search-input"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="搜索灵感关键词"
-        />
-        <button type="button" className="secondary-button">
-          全部类型
-        </button>
-      </div>
+        <div className="inspiration-toolbar">
+          <input
+            className="search-input"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="搜索灵感关键词"
+          />
+          <button type="button" className="secondary-button">
+            全部类型
+          </button>
+        </div>
 
-      <div className="inspiration-list">
-        {visibleInspirations.map((item) => (
-          <article key={item.id} className="inspiration-item">
-            <span className="mini-label">{item.label}</span>
-            <div>
-              <strong>{item.title}</strong>
-              <p>{item.subtitle}</p>
+        <div className="inspiration-list">
+          {visibleInspirations.length ? (
+            visibleInspirations.map((item, index) => (
+              <article key={item.id} className="inspiration-item">
+                <span className="inspiration-icon" aria-hidden="true">
+                  {['♧', '◎', '♢', '⚖'][index % 4]}
+                </span>
+                <div>
+                  <strong>{item.title}</strong>
+                  <p>
+                    <span>{item.label}</span>
+                    <span>{item.subtitle}</span>
+                  </p>
+                </div>
+                <time>{item.time}</time>
+              </article>
+            ))
+          ) : (
+            <div className="empty-panel inspiration-empty-panel">
+              <h3>还没有灵感素材</h3>
+              <p>完成一次真实 AI 对话后，世界观条目和大纲节点会自动进入灵感库。</p>
             </div>
-            <time>{item.time}</time>
-          </article>
-        ))}
+          )}
+        </div>
       </div>
     </div>
   )
@@ -1595,7 +1563,10 @@ type ChatDetailViewProps = {
   chatPending: boolean
   composerValue: string
   messages: Message[]
+  onBack: () => void
   onComposerChange: (value: string) => void
+  onOpenSettings: () => void
+  onShare: () => void
   onSendMessage: () => void
 }
 
@@ -1604,7 +1575,10 @@ function ChatDetailView({
   chatPending,
   composerValue,
   messages,
+  onBack,
   onComposerChange,
+  onOpenSettings,
+  onShare,
   onSendMessage,
 }: ChatDetailViewProps) {
   const lastUserMessage = [...messages].reverse().find((message) => message.role === 'user')
@@ -1614,44 +1588,44 @@ function ChatDetailView({
     <div className="reference-page chat-detail-page">
       <header className="reference-header">
         <div>
-          <button type="button" className="back-button">
+          <button type="button" className="back-button" onClick={onBack} aria-label="返回会话">
             ←
           </button>
           <h2>{activeSession.title}</h2>
         </div>
         <div className="action-row">
-          <button type="button" className="secondary-button">
+          <button type="button" className="secondary-button" onClick={onShare}>
             分享
           </button>
-          <button type="button" className="secondary-button">
+          <button type="button" className="secondary-button" onClick={onOpenSettings}>
             更多
           </button>
         </div>
       </header>
 
       <div className="chat-detail-stream">
-        <div className="user-bubble">
-          {lastUserMessage?.content ||
-            '帮我设计一个拥有贵族血脉魔法和铁路工业革命并存的世界'}
-        </div>
-        <article className="assistant-answer-card">
-          <div className="message-avatar" aria-hidden="true">
-            <Icon name="spark" />
+        {lastUserMessage ? <div className="user-bubble">{lastUserMessage.content}</div> : null}
+
+        {lastAssistantMessage ? (
+          <article className="assistant-answer-card">
+            <div className="message-avatar" aria-hidden="true">
+              <Icon name="spark" />
+            </div>
+            <div>
+              <p>AI 助手</p>
+              <section className="answer-inner-card">
+                <h3>真实模型回复</h3>
+                <p>{lastAssistantMessage.content}</p>
+              </section>
+              <div className="scroll-cue">↓</div>
+            </div>
+          </article>
+        ) : (
+          <div className="empty-panel chat-empty-panel">
+            <h3>还没有真实 AI 回复</h3>
+            <p>在底部输入问题并发送，页面会调用配置的 OpenAI-compatible API。</p>
           </div>
-          <div>
-            <p>
-              {lastAssistantMessage?.content ||
-                '好的，以下是为你设计的世界观概要，包含科技体系、魔法体系和核心冲突。'}
-            </p>
-            <section className="answer-inner-card">
-              <h3>世界概览</h3>
-              <p>
-                这是一个魔法与工业并存的世界，贵族掌握古老血脉魔法，工匠与工程师推动铁路与机械革命。
-              </p>
-            </section>
-            <div className="scroll-cue">↓</div>
-          </div>
-        </article>
+        )}
       </div>
 
       <div className="chat-detail-composer">

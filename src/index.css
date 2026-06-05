@@ -1,13 +1,14 @@
 :root {
-  --app-bg: #f4f6fb;
+  --app-bg: #f5f7fb;
   --surface: #ffffff;
   --surface-soft: #f8faff;
   --text: #253142;
   --text-strong: #121a28;
   --muted: #748195;
   --muted-strong: #4d5b6d;
-  --accent: #5d71e4;
-  --line: rgba(38, 48, 68, 0.1);
+  --accent: #2563eb;
+  --accent-2: #7b3ff2;
+  --line: rgba(30, 42, 62, 0.1);
   --font-sans:
     'LXGW WenKai Screen',
     'Source Han Sans SC',
