@@ -2,7 +2,6 @@ import { startTransition, useEffect, useState } from 'react'
 
 import './App.css'
 import {
-  outlineKinds,
   worldbuildingCategories,
   type BootstrapResponse,
   type ChatResponse,
@@ -1059,22 +1058,22 @@ function WorldbuildingLibraryView({
   settingsPending,
   worldbuildingEntries,
 }: WorldbuildingLibraryViewProps) {
-  const [categoryFilter, setCategoryFilter] = useState<'全部' | WorldbuildingCategory>('全部')
-  const [query, setQuery] = useState('')
+  const [categoryFilter, setCategoryFilter] = useState<WorldbuildingCategory>(
+    worldbuildingEntries[0]?.category ?? '世界背景',
+  )
   const [tab, setTab] = useState<'world' | 'outline' | 'settings'>('world')
 
   const filteredEntries = sortWorldbuildingEntries(
     worldbuildingEntries.filter((entry) => {
-      const categoryMatch = categoryFilter === '全部' || entry.category === categoryFilter
-      const queryMatch =
-        !query.trim() ||
-        `${entry.title} ${entry.summary} ${entry.details}`.toLowerCase().includes(query.toLowerCase())
-
-      return categoryMatch && queryMatch
+      return entry.category === categoryFilter
     }),
   )
 
   const activeEntry = filteredEntries[0] ?? null
+  const pageMenu = worldbuildingCategories.map((category) => ({
+    category,
+    count: worldbuildingEntries.filter((entry) => entry.category === category).length,
+  }))
 
   return (
     <div className="reference-page worldbook-page">
@@ -1104,37 +1103,24 @@ function WorldbuildingLibraryView({
         <div className="worldbook-layout">
           <aside className="worldbook-sidebar">
             <h3>世界书页</h3>
-            <input
-              className="search-input compact"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="搜索书页"
-            />
-          <div className="filter-list">
-            <button
-              type="button"
-              className={categoryFilter === '全部' ? 'filter-chip active' : 'filter-chip'}
-              onClick={() => setCategoryFilter('全部')}
-            >
-              <span>全部条目</span>
-              <strong>{worldbuildingEntries.length}</strong>
-            </button>
-            {worldbuildingCategories.map((category) => {
-              const count = worldbuildingEntries.filter((entry) => entry.category === category).length
-
-              return (
+            <div className="worldbook-menu">
+              {pageMenu.map(({ category, count }) => (
                 <button
                   key={category}
                   type="button"
-                  className={categoryFilter === category ? 'filter-chip active' : 'filter-chip'}
+                  className={
+                    categoryFilter === category ? 'worldbook-page-link active' : 'worldbook-page-link'
+                  }
                   onClick={() => setCategoryFilter(category)}
                 >
+                  <span className="worldbook-page-icon" aria-hidden="true">
+                    {getWorldbookIcon(category)}
+                  </span>
                   <span>{category}</span>
-                  <strong>{count}</strong>
+                  {count ? <small>{count}</small> : null}
                 </button>
-              )
-            })}
-          </div>
+              ))}
+            </div>
             <button type="button" className="secondary-button wide-button">
               + 新建书页
             </button>
@@ -1169,8 +1155,8 @@ function WorldbuildingLibraryView({
               </>
             ) : (
               <div className="empty-panel">
-                <h3>暂时没有世界书页</h3>
-                <p>回到会话页发送一次真实 AI 对话后，这里会展示沉淀出的设定。</p>
+                <h3>{categoryFilter}还没有书页</h3>
+                <p>回到会话页发送一次真实 AI 对话后，这里会展示 D1 中沉淀出的设定。</p>
               </div>
             )}
           </main>
@@ -1240,6 +1226,21 @@ function WorldbuildingLibraryView({
   )
 }
 
+function getWorldbookIcon(category: WorldbuildingCategory) {
+  const icons: Record<WorldbuildingCategory, string> = {
+    世界背景: '▣',
+    历史沿革: '◷',
+    地域势力: '△',
+    角色阵营: '♙',
+    科技体系: '□',
+    魔法体系: '✣',
+    核心冲突: '⚖',
+    剧情大纲: '☰',
+  }
+
+  return icons[category]
+}
+
 type OutlineStudioViewProps = {
   onBack: () => void
   outlineNodes: OutlineNode[]
@@ -1247,14 +1248,9 @@ type OutlineStudioViewProps = {
 }
 
 function OutlineStudioView({ onBack, outlineNodes, sessions }: OutlineStudioViewProps) {
-  const [outlineFilter, setOutlineFilter] = useState<'全部' | OutlineKind>('全部')
   const [selectedNodeId, setSelectedNodeId] = useState('')
 
-  const filteredNodes = sortOutlineNodes(
-    outlineNodes.filter((node) => {
-      return outlineFilter === '全部' || node.kind === outlineFilter
-    }),
-  )
+  const filteredNodes = sortOutlineNodes(outlineNodes)
 
   const activeNode =
     filteredNodes.find((node) => node.id === selectedNodeId) ?? filteredNodes[0] ?? null
@@ -1276,35 +1272,39 @@ function OutlineStudioView({ onBack, outlineNodes, sessions }: OutlineStudioView
       <div className="outline-layout">
         <aside className="chapter-sidebar">
           <span className="tiny-label">章节列表</span>
-          <div className="filter-list">
-            <button
-              type="button"
-              className={outlineFilter === '全部' ? 'filter-chip active' : 'filter-chip'}
-              onClick={() => setOutlineFilter('全部')}
-            >
-              <span>全部节点</span>
-              <strong>{outlineNodes.length}</strong>
-            </button>
-            {outlineKinds.map((kind) => {
-              const count = outlineNodes.filter((node) => node.kind === kind).length
-
-              return (
+          <div className="chapter-list">
+            {filteredNodes.length ? (
+              filteredNodes.map((node) => (
                 <button
-                  key={kind}
+                  key={node.id}
                   type="button"
-                  className={outlineFilter === kind ? 'filter-chip active' : 'filter-chip'}
-                  onClick={() => setOutlineFilter(kind)}
+                  className={activeNode?.id === node.id ? 'chapter-item active' : 'chapter-item'}
+                  onClick={() => setSelectedNodeId(node.id)}
                 >
-                  <span>{outlineKindLabels[kind]}</span>
-                  <strong>{count}</strong>
+                  <span className="chapter-doc-icon" aria-hidden="true">
+                    ▤
+                  </span>
+                  <span>{getChapterTitle(node)}</span>
+                  <span aria-hidden="true">•••</span>
                 </button>
-              )
-            })}
+              ))
+            ) : (
+              <div className="empty-panel">
+                <h3>还没有章节</h3>
+                <p>先回到创作工作台生成剧情大纲节点。</p>
+              </div>
+            )}
           </div>
+          <button type="button" className="chapter-create-button">
+            + 新建章节
+          </button>
         </aside>
 
         <section className="chapter-list-panel">
-          <span className="tiny-label">章节内容</span>
+          <div className="node-list-head">
+            <span className="tiny-label">节点列表</span>
+            <span className="tiny-label">⌯ 筛选</span>
+          </div>
           <div className="prototype-list">
             {filteredNodes.length ? (
               filteredNodes.map((node) => (
@@ -1314,6 +1314,9 @@ function OutlineStudioView({ onBack, outlineNodes, sessions }: OutlineStudioView
                   className={activeNode?.id === node.id ? 'entry-card active' : 'entry-card'}
                   onClick={() => setSelectedNodeId(node.id)}
                 >
+                  <span className="drag-handle" aria-hidden="true">
+                    ⠿
+                  </span>
                   <div className="entry-card-meta">
                     <span className="mini-label">{outlineKindLabels[node.kind]}</span>
                     <span>#{node.position}</span>
@@ -1357,6 +1360,18 @@ function OutlineStudioView({ onBack, outlineNodes, sessions }: OutlineStudioView
       </div>
     </div>
   )
+}
+
+function getChapterTitle(node: OutlineNode) {
+  if (node.kind === 'act') {
+    return node.title
+  }
+
+  if (node.kind === 'chapter') {
+    return node.title
+  }
+
+  return `${outlineKindLabels[node.kind]} ${node.title}`
 }
 
 type CreativeScenesViewProps = {
@@ -1482,29 +1497,38 @@ function InspirationLibraryView({
   const visibleInspirations = inspirations.filter((item) =>
     `${item.label} ${item.title} ${item.subtitle}`.toLowerCase().includes(normalizedQuery),
   )
+  const railItems = [
+    { icon: '□', label: '对话', view: 'workspace' as AppView },
+    { icon: '◎', label: '世界观', view: 'worldbuilding' as AppView },
+    { icon: '♙', label: '角色' },
+    { icon: '♢', label: '灵感库' },
+    { icon: '▤', label: '笔记' },
+    { icon: '⌁', label: '时间线' },
+    { icon: '▣', label: '设定集', view: 'worldbuilding' as AppView },
+  ]
 
   return (
     <div className="inspiration-shell">
       <aside className="inspiration-rail">
-        <div className="rail-mark">♞</div>
+        <div className="rail-mark">羽</div>
         <nav>
-          <button type="button" onClick={() => onNavigate('workspace')}>
-            对话
-          </button>
-          <button type="button" onClick={() => onNavigate('worldbuilding')}>
-            世界观
-          </button>
-          <span>角色</span>
-          <span className="active">灵感库</span>
-          <span>笔记</span>
-          <span>时间线</span>
-          <button type="button" onClick={() => onNavigate('worldbuilding')}>
-            设定集
-          </button>
+          {railItems.map((item) =>
+            item.view ? (
+              <button key={item.label} type="button" onClick={() => onNavigate(item.view)}>
+                <span aria-hidden="true">{item.icon}</span>
+                {item.label}
+              </button>
+            ) : (
+              <span key={item.label} className={item.label === '灵感库' ? 'active' : ''}>
+                <span aria-hidden="true">{item.icon}</span>
+                {item.label}
+              </span>
+            ),
+          )}
         </nav>
         <div className="rail-bottom">
-          <span>回收站</span>
-          <span>设置</span>
+          <span>⌫ 回收站</span>
+          <span>⚙ 设置</span>
         </div>
       </aside>
       <div className="reference-page inspiration-page">

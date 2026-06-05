@@ -1775,10 +1775,52 @@
   font-size: 27px;
 }
 
-.worldbook-sidebar .filter-chip {
-  min-height: 76px;
-  padding: 0 24px;
+.worldbook-menu {
+  display: grid;
+  gap: 22px;
+}
+
+.worldbook-page-link {
+  width: 100%;
+  min-height: 72px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 12px;
+  color: #111827;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
   font-size: 20px;
+  transition:
+    background 160ms ease,
+    color 160ms ease;
+}
+
+.worldbook-page-link.active,
+.worldbook-page-link:hover {
+  color: #4f5ee8;
+  background: #eef1ff;
+}
+
+.worldbook-page-icon {
+  width: 30px;
+  display: grid;
+  place-items: center;
+  color: #8a94a6;
+  font-size: 28px;
+}
+
+.worldbook-page-link.active .worldbook-page-icon {
+  color: #4f5ee8;
+}
+
+.worldbook-page-link small {
+  color: #8a94a6;
+  font-size: 13px;
 }
 
 .worldbook-detail {
@@ -1817,11 +1859,85 @@
   padding: 38px 34px;
   border-right: 1px solid var(--line);
   background: #fff;
+  display: flex;
+  flex-direction: column;
 }
 
 .chapter-list-panel {
   padding: 38px 30px;
   background: #fff;
+}
+
+.chapter-sidebar .chapter-list,
+.chapter-list-panel .prototype-list {
+  margin-top: 18px;
+}
+
+.chapter-list {
+  min-height: 0;
+  display: grid;
+  align-content: start;
+  gap: 0;
+  overflow: auto;
+}
+
+.chapter-item {
+  width: 100%;
+  min-height: 84px;
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  padding: 0 18px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  color: #1f2937;
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.chapter-item.active {
+  position: relative;
+  color: #2563eb;
+  background: #eef4ff;
+  border-radius: 12px;
+  border-bottom-color: transparent;
+}
+
+.chapter-item.active::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -18px;
+  width: 4px;
+  border-radius: 999px;
+  background: #2563eb;
+  content: '';
+}
+
+.chapter-doc-icon {
+  color: #758195;
+}
+
+.chapter-create-button {
+  width: 100%;
+  min-height: 70px;
+  margin-top: auto;
+  border: 0;
+  border-radius: 14px;
+  color: #1f2937;
+  background: #f5f7fb;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.node-list-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
 }
 
 .chapter-detail-panel {
@@ -1837,10 +1953,23 @@
 }
 
 .entry-card {
+  position: relative;
+  grid-template-columns: 28px minmax(0, 1fr);
   min-height: 128px;
   padding: 24px 28px;
   border-radius: 16px;
   background: #fff;
+}
+
+.entry-card > :not(.drag-handle) {
+  grid-column: 2;
+}
+
+.drag-handle {
+  grid-row: 1 / span 3;
+  color: #98a2b3;
+  font-size: 22px;
+  line-height: 1;
 }
 
 .entry-card strong {
@@ -2096,6 +2225,23 @@
   font: inherit;
 }
 
+.inspiration-rail nav button,
+.inspiration-rail nav span {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.inspiration-rail nav span span,
+.inspiration-rail nav button span {
+  width: 24px;
+  color: #344054;
+}
+
+.inspiration-rail nav .active span {
+  color: #2563eb;
+}
+
 .rail-bottom {
   margin-top: auto;
 }
@@ -2250,7 +2396,7 @@
   border-radius: 16px;
   color: #344054;
   font-size: 44px;
-  content: '⌘';
+  content: '⌕';
 }
 
 .chat-detail-composer input {
